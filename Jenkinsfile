@@ -1,26 +1,47 @@
 pipeline {
-    environment {
-        registry = "panjr0109/dockerwebapp"
-        registryCredential = '51a6f422-bead-4b21-bea3-56c903355cef'
-        dockerImage = ''
-    }
     agent any
-    
-    stages {
-        stage('Checkout') {
-            steps {
-                // Checkout code from the repository
-                checkout scm
-            }
+
+    options {
+        skipDefaultCheckout()
+      }
+
+  stages {
+    stage('Checkout source code') {
+      steps {
+        git branch: 'master',
+            credentialsId: 'jenkins_github_pac',
+            url: 'https://github.com/PanJr0109/DevOps.git'
+        sh "ls -la"
+      }
+    }
+
+    stage ('Install dependencies') {
+      tools {
+        nodejs 'nodejs 8.9.4'
+      }
+      steps {
+        sh '''
+          echo "Installing..."
+          npm install
+          echo "Install dependencies successfully."
+          ls -al
+        '''
+      }
+    }
+
+    stage ('Build') {
+      steps {
+        nodejs(nodeJSInstallationName: 'nodejs 8.9.4') {
+          sh 'echo "Build application..."'
+          sh 'npm run build'
+          sh 'echo "Build application successfully."'
+          sh 'ls -al'
         }
-        
-        stage('Building our image') {
-            steps{
-                script {
-                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
-                }
-            }    
+        script {
+          stash includes: 'build/', name: 'build'
         }
+      }
+    }
 
         
     }
