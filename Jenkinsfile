@@ -17,7 +17,7 @@ pipeline {
 
     stage ('Install dependencies') {
       tools {
-        nodejs 'nodejs 8.9.4'
+        nodejs 'nodejs'
       }
       steps {
         sh '''
@@ -31,7 +31,7 @@ pipeline {
 
     stage ('Build') {
       steps {
-        nodejs(nodeJSInstallationName: 'nodejs 8.9.4') {
+        nodejs(nodeJSInstallationName: 'nodejs') {
           sh 'echo "Build application..."'
           sh 'npm run build'
           sh 'echo "Build application successfully."'
