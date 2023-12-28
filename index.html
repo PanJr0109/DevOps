@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+    <div id="wp">
+        <form id="calculator" action="http://localhost:3000" method="post">
+            <p id="title">Calculator</p>
+            <div class="para">
+                <label for="X">X</label>
+                <input type="text" name="X" id="X">
+            </div>
+            <div class="para">
+                <label for="Y">Y</label>
+                <input type="text" name="Y" id="Y">
+            </div>
+            <select name="calculation" id="calculation">
+                <option value="add">+</option>
+                <option value="sub">-</option>
+                <option value="mul">*</option>
+                <option value="div">/</option>
+            </select>
+            <div class="submit">
+                <input id="submit" type="submit" value="Caculate">
+            </div>
+            <div class="result">
+                <span id="result"></span>
+            </div>
+        </form>
+    </div>
+
+</body>
+
+<style>
+    #wp {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        font-family: 'arial';
+    }
+
+    form {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        outline: 0;
+        width: 40%;
+        border: 1px solid rgb(206, 212, 218);
+        border-radius: 5px;
+        text-align: center;
+        height: 360px;
+    }
+
+    #title {
+        font-size: 20px;
+        padding: 10px;
+        margin: 0;
+        background-color: rgb(247, 247, 247);
+        border-radius: 5px 5px 0 0;
+        text-align: left;
+        border-bottom: 1px solid rgb(206, 212, 218);
+        ;
+        margin-bottom: 10px;
+    }
+
+    .para {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        margin: 10px;
+    }
+
+    label {
+        width: 5%;
+        display: inline-block;
+        background-color: rgb(247, 247, 247);
+        padding: 10.8px 5px;
+        border-radius: 5px 0 0 5px;
+        border: 1px solid rgb(206, 212, 218);
+        border-right: none;
+    }
+
+    input {
+        width: 80%;
+        height: 40px;
+        margin: 5px;
+        margin-left: 0;
+        border: 1px solid rgb(206, 212, 218);
+        border-radius: 0 5px 5px 0;
+        font-size: 16px;
+        padding: 0 12px;
+    }
+
+    select {
+        width: 89%;
+        height: 40px;
+        margin: 5px;
+        padding: 0 10px;
+        border: 1px solid rgb(206, 212, 218);
+        border-radius: 5px;
+        font-size: 16px;
+        text-align: center;
+    }
+
+    .submit {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    #submit {
+        margin: 15px;
+        padding: 0 10px;
+        border: 1px solid rgb(206, 212, 218);
+        border-radius: 5px;
+        width: 100px;
+        height: 40px;
+        background-color: #007bff;
+        color: white;
+    }
+
+    #submit:hover {
+        background-color: white;
+        color: #007bff;
+    }
+
+    .result {
+        display: flex;
+        justify-content: flex-end;
+        padding: auto;
+
+    }
+
+    #result {
+        height: 35px;
+        font-size: 30px;
+        border: 1px solid rgb(206, 212, 218);
+        margin: auto 15px auto 0;
+        background-color: #17a2b8;
+        color: white;
+        font-weight: bold;
+        border-radius: 35px;
+        padding:10px;
+        display: none;
+    }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#calculator").submit(function (e) {
+            e.preventDefault();
+            var data = $(this).serialize();
+            $.ajax({
+                url: "http://localhost:3000",
+                type: "POST",
+                data: data,
+                success: function (data) {
+                    $("#result").html(data);
+                    $("#result").css("display", "block");
+                }
+            });
+        });
+    });
+</script>
+
+</html>
