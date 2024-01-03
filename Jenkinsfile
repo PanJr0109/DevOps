@@ -9,7 +9,7 @@ pipeline {
     stage('Checkout source code') {
       steps {
         git branch: 'main',
-            url: 'https://github.com/PanJr0109/DevOps.git'
+            url: 'https://github.com/QuangVinhGlory/MMTNC.git'
         sh "ls -la"
       }
     }
